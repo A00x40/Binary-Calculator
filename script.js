@@ -28,3 +28,31 @@ btns[0].innerHTML = '0' , btns[1].innerHTML = '1';
 btns[2].innerHTML = 'C' , btns[3].innerHTML = '=';
 btns[4].innerHTML = '+' , btns[5].innerHTML = '-';
 btns[6].innerHTML = '*' , btns[7].innerHTML = '/';
+
+var operation = '';
+function onButtonClick( event ) {
+    var btn = event.target || event.srcElement;
+
+    var clickName = document.getElementById(btn.id).innerHTML;
+    var resArea = document.getElementById('res');
+
+    switch(clickName) {
+        case 'C':
+            resArea.innerHTML = '';
+            break;
+        case '=':
+            var operands = resArea.innerHTML.split( operation );
+            var operand1 = operands[0] , operand2 = operands[1];
+
+            resArea.innerHTML = Math.floor( eval( parseInt(operand1,2) + operation + parseInt(operand2,2) ) ).toString(2);
+            break;
+        default:
+            resArea.innerHTML += clickName;
+            if (btn.id != "btn0" && btn.id != "btn1") operation = btn.innerHTML;
+            break;
+    }
+}
+
+for( let btn of btns) {
+    btn.onclick = onButtonClick;
+}
